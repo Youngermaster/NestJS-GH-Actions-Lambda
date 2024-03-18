@@ -1,0 +1,27 @@
+service: nestjs-github-actions-aws-lambda-graphql
+
+useDotenv: true
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  environment:
+    SECRETORPRIVATEKEY: ${env:SECRETORPRIVATEKEY}
+    DATABASE_HOST: ${env:DATABASE_HOST}
+    DATABASE_USERNAME: ${env:DATABASE_USERNAME}
+    DATABASE_PASSWORD: ${env:DATABASE_PASSWORD}
+    DATABASE_DATABASE: ${env:DATABASE_DATABASE}
+
+functions:
+  main:
+    handler: dist/serverless.handler
+    events:
+      - http:
+          method: ANY
+          path: /
+      - http:
+          method: ANY
+          path: '{proxy+}'
