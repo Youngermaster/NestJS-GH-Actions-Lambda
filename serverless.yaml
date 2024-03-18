@@ -15,6 +15,7 @@ provider:
     DATABASE_PASSWORD: ${env:DATABASE_PASSWORD}
     DATABASE_DATABASE: ${env:DATABASE_DATABASE}
     PROJECT_ENVIRONMENT: ${env:PROJECT_ENVIRONMENT}
+    NODE_ENV: production
 
 functions:
   main:
@@ -26,3 +27,10 @@ functions:
       - http:
           method: ANY
           path: '{proxy+}'
+    package:
+      individually: true
+      include:
+        - src/schema.gpl
+      patterns:
+        - 'dist/**'
+        - 'src/schema.gpl'
