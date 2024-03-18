@@ -8,12 +8,16 @@ import { DriverModule } from './modules/driver/driver.module';
 import { TripModule } from './modules/trip/trip.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { DatabaseModule } from './modules/database/database.module';
+import { join } from 'path';
 
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: 'src/schema.gpl',
+      autoSchemaFile:
+        process.env.PROJECT_ENVIRONMENT === 'DEVELOPMENT'
+          ? 'src/schema.gpl'
+          : join(process.cwd(), 'schema.gpl'),
       path: 'transport-app',
     }),
     DatabaseModule,
