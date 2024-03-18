@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import * as bcrypt from 'bcrypt';
+import * as bcryptjs from 'bcryptjs';
 import { User } from './user.entity';
 import { TripCountResponse } from '../trip/dto/count-trip.response';
 
@@ -53,8 +53,8 @@ export class UserService {
     }
 
     if (userData.password) {
-      const salt = await bcrypt.genSalt();
-      userData.password = await bcrypt.hash(userData.password, salt);
+      const salt = await bcryptjs.genSalt();
+      userData.password = await bcryptjs.hash(userData.password, salt);
     }
 
     const newUser = this.userRepository.create(userData);
@@ -84,8 +84,8 @@ export class UserService {
     }
 
     if (updateData.password) {
-      const salt = await bcrypt.genSalt();
-      updateData.password = await bcrypt.hash(updateData.password, salt);
+      const salt = await bcryptjs.genSalt();
+      updateData.password = await bcryptjs.hash(updateData.password, salt);
     }
 
     await this.userRepository.update(id, updateData);

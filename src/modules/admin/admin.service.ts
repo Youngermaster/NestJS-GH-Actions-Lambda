@@ -7,7 +7,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Admin } from './admin.entity';
-import * as bcrypt from 'bcrypt';
+import * as bcryptjs from 'bcryptjs';
 
 @Injectable()
 export class AdminService {
@@ -45,8 +45,8 @@ export class AdminService {
     }
 
     if (adminData.password) {
-      const salt = await bcrypt.genSalt();
-      adminData.password = await bcrypt.hash(adminData.password, salt);
+      const salt = await bcryptjs.genSalt();
+      adminData.password = await bcryptjs.hash(adminData.password, salt);
     }
 
     const newAdmin = this.adminRepository.create(adminData);
@@ -76,8 +76,8 @@ export class AdminService {
     }
 
     if (updateData.password) {
-      const salt = await bcrypt.genSalt();
-      updateData.password = await bcrypt.hash(updateData.password, salt);
+      const salt = await bcryptjs.genSalt();
+      updateData.password = await bcryptjs.hash(updateData.password, salt);
     }
 
     await this.adminRepository.update(id, updateData);

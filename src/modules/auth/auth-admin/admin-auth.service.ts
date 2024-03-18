@@ -1,5 +1,5 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
+import * as bcryptjs from 'bcryptjs';
 import { AdminService } from 'src/modules/admin/admin.service';
 import { TokenService } from 'src/modules/shared/services/token.service';
 import { Admin } from '../../admin/admin.entity';
@@ -18,7 +18,7 @@ export class AdminAuthService {
       throw new UnauthorizedException('Admin does not exist.');
     }
 
-    const isPasswordValid = await bcrypt.compare(password, admin.password);
+    const isPasswordValid = await bcryptjs.compare(password, admin.password);
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid credentials.');
     }

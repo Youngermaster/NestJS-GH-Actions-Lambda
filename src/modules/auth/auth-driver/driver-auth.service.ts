@@ -1,5 +1,5 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
+import * as bcryptjs from 'bcryptjs';
 import { DriverService } from 'src/modules/driver/driver.service';
 import { TokenService } from 'src/modules/shared/services/token.service';
 import { Driver } from '../../driver/driver.entity';
@@ -18,7 +18,7 @@ export class DriverAuthService {
       throw new UnauthorizedException('Driver does not exist.');
     }
 
-    const isPasswordValid = await bcrypt.compare(password, driver.password);
+    const isPasswordValid = await bcryptjs.compare(password, driver.password);
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid credentials.');
     }

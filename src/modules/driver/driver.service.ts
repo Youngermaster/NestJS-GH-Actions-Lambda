@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import * as bcrypt from 'bcrypt';
+import * as bcryptjs from 'bcryptjs';
 import { Driver } from './driver.entity';
 import { TripCountResponse } from '../trip/dto/count-trip.response';
 
@@ -55,8 +55,8 @@ export class DriverService {
     }
 
     if (driverData.password) {
-      const salt = await bcrypt.genSalt();
-      driverData.password = await bcrypt.hash(driverData.password, salt);
+      const salt = await bcryptjs.genSalt();
+      driverData.password = await bcryptjs.hash(driverData.password, salt);
     }
 
     const newDriver = this.driverRepository.create(driverData);
@@ -86,8 +86,8 @@ export class DriverService {
     }
 
     if (updateData.password) {
-      const salt = await bcrypt.genSalt();
-      updateData.password = await bcrypt.hash(updateData.password, salt);
+      const salt = await bcryptjs.genSalt();
+      updateData.password = await bcryptjs.hash(updateData.password, salt);
     }
 
     await this.driverRepository.update(id, updateData);
