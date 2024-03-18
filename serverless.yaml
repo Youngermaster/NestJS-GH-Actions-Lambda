@@ -1,6 +1,7 @@
 service: nestjs-gh-actions-lambda
 
-useDotenv: true
+# Use useDotenv: true to load environment variables from a .env file when running serverless offline
+# useDotenv: true
 
 plugins:
   - serverless-offline

@@ -1,4 +1,4 @@
-name: Node.js CI/CD
+name: NestJS AWS Lambda CI/CD
 
 on:
   push:
@@ -36,4 +36,11 @@ jobs:
         run: sls config credentials --provider aws --key ${{ secrets.AWS_KEY }} --secret ${{ secrets.AWS_SECRET }}
 
       - name: Deploy to AWS Lambda
+        env:
+          SECRETORPRIVATEKEY: ${{ secrets.SECRETORPRIVATEKEY }}
+          DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+          DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
+          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          DATABASE_DATABASE: ${{ secrets.DATABASE_DATABASE }}
+          PROJECT_ENVIRONMENT: ${{ secrets.PROJECT_ENVIRONMENT }}
         run: sls deploy --stage prod --region us-east-1
