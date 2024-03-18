@@ -1,4 +1,4 @@
-service: nestjs-github-actions-aws-lambda-graphql
+service: nestjs-gh-actions-lambda
 
 useDotenv: true
 
