@@ -1,0 +1,248 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Driver {
+  id: Int!
+  firstName: String!
+  lastName: String!
+  email: String!
+  phoneNumber: String!
+  licenseNumber: String!
+  averageRating: Float!
+  availability: Boolean!
+  createdAt: String!
+  updatedAt: String!
+  trips: [Trip!]
+  state: Boolean!
+}
+
+type Trip {
+  id: Int!
+  driver: Driver!
+  user: User!
+  origin: String!
+  destination: String!
+  startDateTime: DateTime!
+  endDateTime: DateTime
+  distance: Float!
+  fare: Float!
+  duration: Int
+  status: TripStatus!
+  createdAt: String!
+  updatedAt: String!
+  state: Boolean!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+enum TripStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+type User {
+  id: Int!
+  firstName: String!
+  lastName: String!
+  email: String!
+  phoneNumber: String!
+  registrationDate: String!
+  location: String
+  averageRating: Float
+  status: UserStatus!
+  createdAt: String!
+  updatedAt: String!
+  trips: [Trip!]
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+type UserAuthResponse {
+  token: String!
+  user: User!
+}
+
+type TripCountResponse {
+  count: Int!
+  trips: [Trip!]!
+}
+
+type UserResponse {
+  user: User!
+  trips: TripCountResponse!
+}
+
+type UsersResponse {
+  users: [User!]!
+  count: Float!
+}
+
+type Admin {
+  id: Int!
+  firstName: String!
+  lastName: String!
+  email: String!
+  phoneNumber: String!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type AdminsResponse {
+  admins: [Admin!]!
+  count: Float!
+}
+
+type AdminAuthResponse {
+  token: String!
+  admin: Admin!
+}
+
+type DriverAuthResponse {
+  token: String!
+  driver: Driver!
+}
+
+type DriversResponse {
+  drivers: [Driver!]!
+  count: Float!
+}
+
+type DriverResponse {
+  driver: Driver!
+  trips: TripCountResponse!
+}
+
+type TripResponse {
+  trips: [Trip!]!
+  count: Float!
+}
+
+type Query {
+  admins: AdminsResponse!
+  admin(id: Int!): Admin
+  users: UsersResponse!
+  user(id: Int!): UserResponse
+  drivers: DriversResponse!
+  driver(id: Int!): DriverResponse
+  trips: TripResponse!
+  trip(id: Int!): Trip
+}
+
+type Mutation {
+  createAdmin(createAdminData: CreateAdminInput!): AdminAuthResponse!
+  updateAdmin(updateUserData: UpdateAdminInput!): Admin!
+  removeAdmin(id: Int!): Boolean!
+  loginAdmin(email: String!, password: String!): AdminAuthResponse!
+  loginUser(email: String!, password: String!): UserAuthResponse!
+  createUser(createUserData: CreateUserInput!): UserAuthResponse!
+  updateUser(updateUserData: UpdateUserInput!): User!
+  removeUser(id: Int!): Boolean!
+  loginDriver(email: String!, password: String!): DriverAuthResponse!
+  createDriver(createDriverData: CreateDriverInput!): DriverAuthResponse!
+  updateDriver(updateDriverData: UpdateDriverInput!): Driver!
+  removeDriver(id: Int!): Boolean!
+  createTrip(createTripData: CreateTripInput!): Trip!
+  updateTrip(updateTripData: UpdateTripInput!): Trip!
+  removeTrip(id: Int!): Boolean!
+  finalizeTrip(id: Int!, endDateTime: String!): Trip!
+}
+
+input CreateAdminInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  phoneNumber: String!
+}
+
+input UpdateAdminInput {
+  firstName: String
+  lastName: String
+  email: String
+  password: String
+  phoneNumber: String
+  id: Int!
+}
+
+input CreateUserInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  phoneNumber: String!
+  location: String
+  averageRating: Float = 0
+  status: UserStatus! = ACTIVE
+}
+
+input UpdateUserInput {
+  firstName: String
+  lastName: String
+  email: String
+  password: String
+  phoneNumber: String
+  location: String
+  averageRating: Float = 0
+  status: UserStatus = ACTIVE
+  id: Int!
+}
+
+input CreateDriverInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  phoneNumber: String!
+  licenseNumber: String!
+  averageRating: Float! = 0
+  availability: Boolean! = false
+}
+
+input UpdateDriverInput {
+  firstName: String
+  lastName: String
+  email: String
+  password: String
+  phoneNumber: String
+  licenseNumber: String
+  averageRating: Float = 0
+  availability: Boolean = false
+  id: Int!
+}
+
+input CreateTripInput {
+  driverId: Int!
+  userId: Int!
+  origin: String!
+  destination: String!
+  distance: Float!
+  fare: Float!
+
+  """Duration of the trip in minutes."""
+  duration: Int!
+  status: TripStatus! = PENDING
+}
+
+input UpdateTripInput {
+  driverId: Int
+  userId: Int
+  origin: String
+  destination: String
+  distance: Float
+  fare: Float
+
+  """Duration of the trip in minutes."""
+  duration: Int
+  status: TripStatus = PENDING
+  id: Int!
+}
