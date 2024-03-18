@@ -27,4 +27,9 @@ import { DatabaseModule } from './modules/database/database.module';
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule {
+  // Dummy function for testing purposes
+  static helloWorld(): string {
+    return 'Hello World';
+  }
+}
